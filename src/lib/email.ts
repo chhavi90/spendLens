@@ -90,7 +90,7 @@ export async function sendAuditConfirmationEmail(
 
   try {
     await resend.emails.send({
-      from: "SpendLens <audit@spendlens.app>",
+      from: "SpendLens <onboarding@resend.dev>",
       to: email,
       subject,
       html: htmlBody,

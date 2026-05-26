@@ -9,8 +9,8 @@ Max tokens: 256
 ### Full Prompt (as sent to the API)
 
 ```
-You are an expert financial advisor specializing in SaaS and AI tool spend 
-optimization for startups. A company has just completed an AI spend audit. 
+You are an expert financial advisor specializing in SaaS and AI tool spend
+optimization for startups. A company has just completed an AI spend audit.
 Write a concise, personalized ~100-word summary of their audit results.
 
 CONTEXT:
@@ -51,40 +51,46 @@ INSTRUCTIONS:
 ### What I Tried That Didn't Work
 
 **Version 1 — Too vague:**
+
 ```
 Summarize this AI spend audit in 100 words.
 ```
-Result: Generated generic advice ("consider reviewing your AI tool subscriptions") 
+
+Result: Generated generic advice ("consider reviewing your AI tool subscriptions")
 with no reference to actual tools or numbers. Useless.
 
 **Version 2 — Too prescriptive on structure:**
+
 ```
-Write a 3-sentence summary: sentence 1 = current spend, 
+Write a 3-sentence summary: sentence 1 = current spend,
 sentence 2 = savings, sentence 3 = recommendation.
 ```
+
 Result: Mechanically correct but robotic. Sounded like a template, not an advisor.
 
 **Version 3 — Missing the tone instruction:**
-Without "sound like a CFO advisor, not a salesperson," the model defaulted to 
-marketing language ("unlock significant savings," "transform your AI investment"). 
+Without "sound like a CFO advisor, not a salesperson," the model defaulted to
+marketing language ("unlock significant savings," "transform your AI investment").
 Adding the persona instruction fixed this entirely.
 
 ---
 
 ## Fallback Template
 
-When the Anthropic API is unavailable (no key, rate limit, network error), 
+When the Anthropic API is unavailable (no key, rate limit, network error),
 `buildFallbackSummary()` in `ai-summary.ts` generates a deterministic paragraph:
 
 **For high-savings case:**
-> "Your team of {N} is spending {$X}/month on AI tools. The audit identified {$Y}/month 
-> ({$Z}/year) in potential savings across {N} tool(s). The biggest opportunity: {tool name}. 
-> These optimizations require no change in workflow quality — they're plan-level or vendor 
+
+> "Your team of {N} is spending {$X}/month on AI tools. The audit identified {$Y}/month
+> ({$Z}/year) in potential savings across {N} tool(s). The biggest opportunity: {tool name}.
+> These optimizations require no change in workflow quality — they're plan-level or vendor
 > switches where equivalent capability exists at lower cost."
 
 **For already-optimal case:**
-> "Your team of {N} is spending {$X}/month on AI tools, and the audit finds you're already 
+
+> "Your team of {N} is spending {$X}/month on AI tools, and the audit finds you're already
 > reasonably optimized for a {useCase}-focused workflow..."
 
-The fallback is intentionally honest and specific — it uses the actual numbers from the 
+The fallback is intentionally honest and specific — it uses the actual numbers from the
 audit engine, so it's never generic even without the API.

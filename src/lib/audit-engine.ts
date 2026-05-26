@@ -10,10 +10,10 @@ import {
 } from "../types";
 import { getToolById, getPlanById, TOOL_DEFINITIONS } from "./pricing-data";
 
-// ─── Audit Rule Helpers ───────────────────────────────────────────────────────
+// Audit Rule Helpers 
 
 /**
- * Check if a team is overpaying vs catalog price (e.g., paying more than MSRP).
+  Check if a team is overpaying vs catalog price (e.g., paying more than MSRP).
  */
 function checkOverpayingVsCatalog(entry: ToolEntry): {
   flag: boolean;
@@ -29,7 +29,7 @@ function checkOverpayingVsCatalog(entry: ToolEntry): {
 
 /**
  * Check if the user is on a Team plan with fewer seats than required minimum.
- * E.g. Claude Team requires min 5 seats; if team is 2, downgrade to Pro.
+   E.g. Claude Team requires min 5 seats; if team is 2, downgrade to Pro.
  */
 function checkWrongPlanForTeamSize(
   entry: ToolEntry,
@@ -82,8 +82,8 @@ function checkWrongPlanForTeamSize(
 }
 
 /**
- * Check if a cheaper alternative tool exists for the user's primary use case.
- * Only recommend if savings are >20% of current spend.
+  Check if a cheaper alternative tool exists for the user's primary use case.
+  Only recommend if savings are >20% of current spend.
  */
 function checkAlternativeTool(
   entry: ToolEntry,
@@ -157,8 +157,8 @@ function checkAlternativeTool(
 }
 
 /**
- * Check if the user could benefit from buying credits (Credex use case).
- * Surfaces when spend > $200/mo total.
+  Check if the user could benefit from buying credits (Credex use case).
+  Surfaces when spend > $200/mo total.
  */
 function checkCreditsOpportunity(entry: ToolEntry): Recommendation | null {
   if (entry.monthlySpend < 100) return null;
@@ -176,7 +176,7 @@ function checkCreditsOpportunity(entry: ToolEntry): Recommendation | null {
 }
 
 /**
- * Check seat optimization: if paying for far more seats than team members who'd use it.
+  Check seat optimization: if paying for far more seats than team members who'd use it.
  */
 function checkSeatOptimization(entry: ToolEntry, teamSize: number): Recommendation | null {
   // If seats > team size by more than 20%, flag it
@@ -198,7 +198,7 @@ function checkSeatOptimization(entry: ToolEntry, teamSize: number): Recommendati
   return null;
 }
 
-// ─── Main Audit Function ──────────────────────────────────────────────────────
+//Main Audit Function
 
 export function runAuditEngine(formData: AuditFormData): AuditSummary {
   const toolResults: ToolAuditResult[] = [];
@@ -308,7 +308,7 @@ export function runAuditEngine(formData: AuditFormData): AuditSummary {
   };
 }
 
-// ─── Formatting Helpers ───────────────────────────────────────────────────────
+//Formatting Helpers 
 
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-US", {

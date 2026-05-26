@@ -1,23 +1,58 @@
-import Link from "next/link";
+"use client";
 
-export function Header() {
+interface HeaderProps {
+  isShowingResults?: boolean;
+  onGoHome?: () => void;
+}
+
+export function Header({ isShowingResults = false, onGoHome }: HeaderProps) {
+
+  const handleLogoClick = () => {
+    if (isShowingResults && onGoHome) {
+      onGoHome();
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleRunAuditClick = () => {
+    if (isShowingResults && onGoHome) {
+      onGoHome();
+    } else {
+      const formEl = document.getElementById("audit-form");
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="container max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+
+        {/* Logo */}
+        <button
+          onClick={handleLogoClick}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <div className="w-7 h-7 bg-foreground rounded flex items-center justify-center">
             <span className="text-background text-xs font-bold font-mono">S</span>
           </div>
           <span className="font-semibold tracking-tight">SpendLens</span>
           <span className="text-xs text-muted-foreground hidden sm:inline">by Credex</span>
-        </Link>
+        </button>
+
         <nav className="flex items-center gap-4 text-sm">
-          <a
-            href="#audit-form"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+
+          {/* Run Audit */}
+          <button
+            onClick={handleRunAuditClick}
+            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
           >
-            Run Audit
-          </a>
+            {isShowingResults ? "Run Audit" : "Run Audit"}
+          </button>
+
+          {/* Credex */}
           <a
             href="https://credex.rocks"
             target="_blank"
@@ -26,6 +61,7 @@ export function Header() {
           >
             Credex →
           </a>
+
         </nav>
       </div>
     </header>

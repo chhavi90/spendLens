@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { AuditForm } from "../components/form/AuditForm";
-import { AuditResults } from "../components/audit/AuditResults";
-import { AuditFormData, AuditSummary } from "../types";
-import { Header } from "../components/layout/Header";
-import { Hero } from "../components/layout/Hero";
+import { AuditForm } from "@/components/form/AuditForm";
+import { AuditResults } from "@/components/audit/AuditResults";
+import { AuditFormData, AuditSummary } from "@/types";
+import { Header } from "@/components/layout/Header";
+import { Hero } from "@/components/layout/Hero";
 
 export default function HomePage() {
   const [auditResult, setAuditResult] = useState<{
@@ -17,29 +17,28 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const isShowingResults = auditResult !== null;
+
   const handleSubmit = async (formData: AuditFormData) => {
     setIsLoading(true);
     setError(null);
-
     try {
       const response = await fetch("/api/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.error ?? "Failed to run audit");
       }
-
       const data = await response.json();
-      setAuditResult({ summary: data.summary, auditId: data.auditId, formData });
-      
-      // Scroll to results
-      setTimeout(() => {
-        document.getElementById("audit-results")?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      setAuditResult({
+        summary: data.summary,
+        auditId: data.auditId,
+        formData,
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -47,19 +46,27 @@ export default function HomePage() {
     }
   };
 
-  const handleReset = () => {
+  const handleGoHome = () => {
     setAuditResult(null);
     setError(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => {
+      const formEl = document.getElementById("audit-form");
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 50);
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header
+        isShowingResults={isShowingResults}
+        onGoHome={handleGoHome}
+      />
 
-      {!auditResult && (
-        <Hero />
-      )}
+      {!auditResult && <Hero />}
 
       <main className="container max-w-4xl mx-auto px-4 py-8">
         {!auditResult ? (
@@ -76,7 +83,7 @@ export default function HomePage() {
               summary={auditResult.summary}
               formData={auditResult.formData}
               auditId={auditResult.auditId}
-              onReset={handleReset}
+              onReset={handleGoHome}
             />
           </div>
         )}

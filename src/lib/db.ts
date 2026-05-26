@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { AuditFormData, AuditSummary, LeadCapture, SavedAudit } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-// ─── Client ───────────────────────────────────────────────────────────────────
+//  Client 
 
 function getSupabaseClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -11,11 +11,11 @@ function getSupabaseClient() {
   if (!url || !key) {
     throw new Error("Supabase environment variables not configured");
   }
-
+   const cleanUrl = url.replace(/\/$/, '');
   return createClient(url, key);
 }
 
-// ─── Audit CRUD ───────────────────────────────────────────────────────────────
+//  Audit CRUD 
 
 export async function saveAudit(
   formData: AuditFormData,
@@ -96,7 +96,7 @@ export async function saveLeadCapture(lead: LeadCapture): Promise<boolean> {
   }
 }
 
-// ─── SQL Schema (run once in Supabase dashboard) ──────────────────────────────
+//  SQL Schema (run once in Supabase dashboard) 
 /*
 CREATE TABLE audits (
   id UUID PRIMARY KEY,

@@ -1,7 +1,7 @@
 import { runAuditEngine } from "../lib/audit-engine";
 import { AuditFormData } from "../types";
 
-// ─── Test 1: Basic overspend detection ───────────────────────────────────────
+//  Test 1: Basic overspend detection 
 describe("Audit Engine — Overpayment Detection", () => {
   it("detects when user pays more than catalog price", () => {
     const formData: AuditFormData = {
@@ -45,7 +45,7 @@ describe("Audit Engine — Overpayment Detection", () => {
   });
 });
 
-// ─── Test 2: Wrong plan for team size ────────────────────────────────────────
+//  Test 2: Wrong plan for team size 
 describe("Audit Engine — Plan Size Mismatch", () => {
   it("flags Claude Team plan for a 2-person team (min is 5 seats)", () => {
     const formData: AuditFormData = {
@@ -90,7 +90,7 @@ describe("Audit Engine — Plan Size Mismatch", () => {
   });
 });
 
-// ─── Test 3: Seat optimization ────────────────────────────────────────────────
+//  Test 3: Seat optimization 
 describe("Audit Engine — Seat Optimization", () => {
   it("flags excess seats when paying for significantly more than team size", () => {
     const formData: AuditFormData = {
@@ -141,7 +141,7 @@ describe("Audit Engine — Seat Optimization", () => {
   });
 });
 
-// ─── Test 4: Alternative tool recommendations ─────────────────────────────────
+//  Test 4: Alternative tool recommendations 
 describe("Audit Engine — Alternative Tool Suggestions", () => {
   it("suggests Windsurf Teams as alternative to Cursor Business for coding", () => {
     const formData: AuditFormData = {
@@ -220,7 +220,7 @@ describe("Audit Engine — Alternative Tool Suggestions", () => {
   });
 });
 
-// ─── Test 5: Total savings calculation ────────────────────────────────────────
+//  Test 5: Total savings calculation 
 describe("Audit Engine — Summary Math", () => {
   it("correctly sums total monthly and annual savings across tools", () => {
     const formData: AuditFormData = {
@@ -303,7 +303,7 @@ describe("Audit Engine — Summary Math", () => {
   });
 });
 
-// ─── Test 6: Credits recommendation ──────────────────────────────────────────
+//  Test 6: Credits recommendation 
 describe("Audit Engine — Credits Opportunity", () => {
   it("surfaces credits recommendation for high API spend", () => {
     const formData: AuditFormData = {

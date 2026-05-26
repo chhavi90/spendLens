@@ -1,4 +1,4 @@
-// ─── Tool & Plan Types ───────────────────────────────────────────────────────
+//  Tool & Plan Types 
 
 export type ToolId =
   | "cursor"
@@ -32,7 +32,7 @@ export interface ToolDefinition {
   category: "coding" | "chat" | "api";
 }
 
-// ─── Form / Input Types ───────────────────────────────────────────────────────
+//  Form / Input Types 
 
 export interface ToolEntry {
   toolId: ToolId;
@@ -48,7 +48,7 @@ export interface AuditFormData {
   companyName?: string;
 }
 
-// ─── Audit Engine Types ───────────────────────────────────────────────────────
+//  Audit Engine Types 
 
 export type RecommendationAction =
   | "downgrade_plan"
@@ -98,7 +98,7 @@ export interface AuditSummary {
   id?: string; // set after persistence
 }
 
-// ─── Lead & Storage Types ─────────────────────────────────────────────────────
+//  Lead & Storage Types 
 
 export interface LeadCapture {
   email: string;

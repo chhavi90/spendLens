@@ -1,7 +1,6 @@
 import { ToolDefinition } from "../types";
 
 // All prices verified from official pricing pages — see PRICING_DATA.md
-// Last updated: 2025-05-21
 
 export const TOOL_DEFINITIONS: ToolDefinition[] = [
   {
